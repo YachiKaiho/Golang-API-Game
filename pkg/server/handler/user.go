@@ -1,13 +1,17 @@
 package handler
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os/user"
 
 	"GOLANG-API-GAME/pkg/repository/user"
 	"GOLANG-API-GAME/pkg/server/response"
+	"Golang-API-Game/pkg/dcontext"
 )
 
 //User information Get
@@ -51,6 +55,36 @@ func HandleUserUpdate() http.HandleFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
 
 		//Get Updated information from RequestBody
+		body, err := ioutil.ReadAll(request.Body)
+		if err != nil {
+			log.Println(err)
+			response.BadRequest(writer, "Invalid Request Body")
+			return
+		}
+		//json conversion including array
+		var requestBody userUpdateRequest
+		json.Unmarshal(body, &requestBody)
 
+		////Get UserID from Context
+		ctx := request.Context()
+		userID := dcontext.GetUserIDFromContext(ctx)
+		if len(userID) == 0 {
+			log.Println(errors.New("userID is empty"))
+			response.InternalServerError(writer, "Internal server error")
+			return
+		}
+
+		//userTableupdate
+		if error != nil {
+			log.Println(err)
+			response.InternalServerError(writer, "Internal Server Error")
+			return
+		}
+
+		response.Success(writer, "")
 	}
+}
+
+type userUpdateRequest struct {
+	Name string `json:"name"`
 }
