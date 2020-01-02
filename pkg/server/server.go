@@ -11,5 +11,10 @@ import (
 func Serve(addr string) {
 
 	//URLマッピングを行う
-	http.HandleFunc("/auth/create", post(handler.HandleAuthCreate))
+	http.HandleFunc("/auth/create", post(handler.HandleAuthCreate()))
+
+	http.Handle("/user/get",
+		get(handler.HandleUserGet()))
+	http.Handle()
+)
 }
