@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"github.com/google/uuid"
 
-	"Golang-API-Game/repository/user"
-	"Golang-API-Game/server/response"
+	"GOLANG-API-GAME/repository/user"
+	"GOLANG-API-GAME/server/response"
 )
 
 func HandleAuthCreate() http.HandleFunc{
@@ -17,8 +17,8 @@ func HandleAuthCreate() http.HandleFunc{
 	       body,err := ioutil.ReadAll(request.Body)
 	       if err != nillog.Println(err)
 	       response.BadRequest(writer, "Invalid RequestBody")
-	       return
-	  }
+		   return
+		   
 	  var requestBody authCreateRequest
 	  json.Unmarshal(body, &requestBody)
 
@@ -36,15 +36,17 @@ func HandleAuthCreate() http.HandleFunc{
 		log.Println(err)
 		response.InternalServerError(writer, "Internal Server Error")
 		return
-	}
+	  }
 
-	//user database string
-	err := user.Insert(userID,String(), authToken.String(), requestBody.Name)
-	if err != nil{
-		log.Println(err)
-		response.InternalServerError(writer, "Internal server error")
-		return
-	}
+	  //user database string
+	  err := user.Insert(userID,String(), authToken.String(), requestBody.Name)
+	  if err != nil{
+	  	log.Println(err)
+	  	response.InternalServerError(writer, "Internal server error")
+	  	return
+	  }
+	  response.Success(writer, authCreateResponse{Tokens: authToken.String()})
+ }
 }
 
 

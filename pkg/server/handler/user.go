@@ -9,9 +9,9 @@ import (
 	"net/http"
 	"os/user"
 
-	"GOLANG-API-GAME/pkg/repository/user"
-	"GOLANG-API-GAME/pkg/server/response"
 	"Golang-API-Game/pkg/dcontext"
+	"Golang-API-Game/pkg/repository/user"
+	"Golang-API-Game/pkg/server/response"
 )
 
 //User information Get
