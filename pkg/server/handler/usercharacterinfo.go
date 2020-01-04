@@ -37,7 +37,7 @@ func HandleCharacterList() http.HandlerFunc { //すでにuser.goで使われて�
 			return
 		}
 		//userIDによってuserCharacter型のスライスを返す
-		userCharacterList, err := dojoUserCharacter.SelectByUserID(userID)
+		userCharacterList, err := gachaUserCharacter.SelectByUserID(userID)
 		if err != nil {
 			log.Println(err)
 			response.InternalServerError(writer, "Internal Server Error")

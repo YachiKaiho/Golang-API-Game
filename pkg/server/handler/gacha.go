@@ -54,13 +54,13 @@ func HandleGachaUpdate() http.HandlerFunc {
 		//Odds sum
 		sum, err = gacha_gacha_odds.OddsSum()
 
-		var gacha_odds *dojo_gacha_odds.GachaOdds
+		var gacha_odds *gacha_gacha_odds.GachaOdds
 		//Make is used for only data is known,prevent from append repeated
 		characterget := make([]gachaDrawResult, 0, requestBody.Times)
 		rand.Seed(time.Now().UnixNano())
 		for i := 0; i < requestBody.Times; i++ {
 			randoms = rand.Intn(sum + 1)
-			gacha_odds, err = dojo_gacha_odds.SelectByRandomNumber(randoms)
+			gacha_odds, err = gacha_gacha_odds.SelectByRandomNumber(randoms)
 			// Make usercharacterID by uuid
 			userCharacterID, err := uuid.NewRandom()
 			character, err := characters.SelectByCharacterID(gacha_odds.CharacterID)
@@ -73,13 +73,13 @@ func HandleGachaUpdate() http.HandlerFunc {
 			list.Name = character.Name
 			characterget = append(characterget, list)
 			user_characters.Insert(userID, userCharacterID.String(), gacha_odds.CharacterID)
-			characterinfo, err := dojo_character.SelectByCharacterID(gacha_odds.CharacterID)
+			characterinfo, err := gacha_character.SelectByCharacterID(gacha_odds.CharacterID)
 			if err != nil {
 				log.Println(err)
 				return
 			}
 			score := characterinfo.Power
-			err = dojo_ranking.UpsertByPower(userID, score)
+			err = gacha_ranking.UpsertByPower(userID, score)
 			if err != nil {
 				log.Println(err)
 				return
