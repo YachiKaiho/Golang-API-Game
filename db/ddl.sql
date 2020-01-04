@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema gacha-game
+-- Schema gacha_game
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema gacha-game
+-- Schema gacha_game
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `gacha-game` DEFAULT CHARACTER SET utf8 ;
-USE `gacha-game` ;
+CREATE SCHEMA IF NOT EXISTS `gacha_game` DEFAULT CHARACTER SET utf8 ;
+USE `gacha_game` ;
 
 -- -----------------------------------------------------
--- Table `gacha-game`.`user`
+-- Table `gacha_game`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gacha-game`.`user` (
+CREATE TABLE IF NOT EXISTS `gacha_game`.`user` (
   `user_id` VARCHAR(128) NOT NULL COMMENT 'ユーザID',
   `auth_token` VARCHAR(128) NOT NULL COMMENT '認証トークン',
   `name` VARCHAR(64) NOT NULL COMMENT 'ユーザ名',
@@ -31,12 +31,12 @@ COMMENT = 'ユーザ';
 
 
 -- -----------------------------------------------------
--- Table `gacha-game`.`characters`
+-- Table `gacha_game`.`characters`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gacha-game`.`characters` (
+CREATE TABLE IF NOT EXISTS `gacha_game`.`characters` (
   `character_id` VARCHAR(128) NOT NULL COMMENT 'キャラクターID',
   `name` VARCHAR(64) NOT NULL COMMENT 'キャラクター名',
-  `power` INT UNSIGNED NOT NULL COMMENT 'パワー',
+  `power` INT UNSIGNED NOT NULL COMMENT 'パワー'
   `type` INT UNSIGNED NOT NULL COMMENT 'type'
   PRIMARY KEY (`character_id`))
 ENGINE = InnoDB
@@ -44,9 +44,9 @@ COMMENT = 'キャラクター';
 
 
 -- -----------------------------------------------------
--- Table `gacha-game`.`user_characters`
+-- Table `gacha_game`.`user_characters`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gacha-game`.`user_characters` (
+CREATE TABLE IF NOT EXISTS `gacha_game`.`user_characters` (
   `user_id` VARCHAR(128) NOT NULL COMMENT 'ユーザID',
   `user_character_id` VARCHAR(128) NOT NULL COMMENT 'ユーザ名',
   `character_id` VARCHAR(128) NOT NULL COMMENT 'キャラクターID',
@@ -55,12 +55,12 @@ CREATE TABLE IF NOT EXISTS `gacha-game`.`user_characters` (
   INDEX `fk_user_character_character_idx` (`character_id` ASC),
   CONSTRAINT `fk_user_characters_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `gacha-game`.`user` (`user_id`)
+    REFERENCES `gacha_game`.`user` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_characters_characters`
     FOREIGN KEY (`character_id`)
-    REFERENCES `gacha-game`.`characters` (`character_id`)
+    REFERENCES `gacha_game`.`characters` (`character_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -68,16 +68,16 @@ COMMENT = 'ユーザ所持キャラクター';
 
 
 -- -----------------------------------------------------
--- Table `gacha-game`.`gacha_odds`
+-- Table `gacha_game`.`gacha_odds`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gacha-game`.`gacha_odds` (
+CREATE TABLE IF NOT EXISTS `gacha_game`.`gacha_odds` (
   `character_id` VARCHAR(128) NOT NULL COMMENT 'キャラクターID',
   `odds` INT NOT NULL COMMENT '排出重み',
   INDEX `fk_gacha_odds_character_idx` (`character_id` ASC),
   PRIMARY KEY (`character_id`),
   CONSTRAINT `fk_gacha_odds_characters`
     FOREIGN KEY (`character_id`)
-    REFERENCES `gacha-game`.`characters` (`character_id`)
+    REFERENCES `gacha_game`.`characters` (`character_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB

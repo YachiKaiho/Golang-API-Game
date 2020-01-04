@@ -1,4 +1,4 @@
-use gacha-game;
+use gacha_game;
 
 INSERT INTO `characters` (`character_id`,`name`,`power`,`type`) VALUES ('character_0001','イカロス',2564,'水');
 INSERT INTO `characters` (`character_id`,`name`,`power`,`type`) VALUES ('character_0002','ゼノン',4000,'火');
