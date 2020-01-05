@@ -7,10 +7,9 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os/user"
 
 	"Golang-API-Game/pkg/dcontext"
-	"Golang-API-Game/pkg/repository/user"
+	gacha_user "Golang-API-Game/pkg/repository/user"
 	"Golang-API-Game/pkg/server/response"
 )
 
@@ -27,7 +26,7 @@ func HandleUserGet() http.HandleFunc {
 		}
 
 		//UserData　Management
-		var user *user.User
+		var user *gacha_user.User
 		var err error
 		if err != nil {
 			log.Println(err)
