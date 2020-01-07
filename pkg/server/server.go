@@ -3,8 +3,8 @@ package server
 import (
 	"log"
 
-	"GOLANG-API-GAME/pkg/handler"
-	"GOLANG-API-GAME/pkg/middleware"
+	"Golang-API-Game/pkg/server/handler"
+	"Golang-API-Game/pkg/server/middleware"
 	"net/http"
 )
 
